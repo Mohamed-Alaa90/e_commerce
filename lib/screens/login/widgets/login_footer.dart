@@ -1,4 +1,4 @@
-import 'package:e_commerce/screens/sign_up/screens/sign_up_screen.dart';
+import 'package:e_commerce/screens/register/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -13,7 +13,7 @@ class LoginFooter extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            InkWell(onTap: () {}, child: const Text('ForgetPassword')),
+            InkWell(onTap: () {}, child: const Text('Forget Password')),
             Icon(Icons.arrow_forward, color: Colors.grey.shade600),
           ],
         ),
@@ -33,7 +33,7 @@ class LoginFooter extends StatelessWidget {
                 Navigator.of(context).pushReplacement(_createRoute());
               },
               child: Text(
-                'Sign Up',
+                'Register',
                 style: TextStyle(fontSize: 15, color: theme.primaryColor),
               ),
             ),
@@ -45,9 +45,9 @@ class LoginFooter extends StatelessWidget {
 
   Route _createRoute() {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => SignUpScreen(),
+      pageBuilder: (context, animation, secondaryAnimation) => RegisterScreen(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0); 
+        const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
         const curve = Curves.ease;
 

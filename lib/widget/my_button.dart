@@ -23,7 +23,7 @@ class MyButton extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(12.w),
         color: color,
       ),
       child: InkWell(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class MyTextForm extends StatelessWidget {
   final TextEditingController controller;
-  final String labelText;
+  final String ?labelText;
   final String? hintText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
@@ -21,7 +21,7 @@ class MyTextForm extends StatelessWidget {
   const MyTextForm({
     super.key,
     required this.controller,
-    required this.labelText,
+     this.labelText,
     this.hintText,
     this.prefixIcon,
     this.suffixIcon,
@@ -43,46 +43,46 @@ class MyTextForm extends StatelessWidget {
     final theme = Theme.of(context);
 
     return TextFormField(
+
       controller: controller,
       decoration: InputDecoration(
+
         labelText: labelText,
+        labelStyle: TextStyle(color: theme.colorScheme.primary),
         hintText: hintText,
         prefixIcon:
             prefixIcon != null
-                ? Icon(prefixIcon, color: Theme.of(context).primaryColor)
+                ? Icon(prefixIcon, color: theme.colorScheme.primary)
                 : null,
         suffixIcon:
             suffixIcon != null
                 ? IconButton(
-                  icon: Icon(suffixIcon, color: Theme.of(context).primaryColor),
+                  icon: Icon(suffixIcon, color: theme.colorScheme.primary),
                   onPressed: onSuffixIconPressed,
                 )
                 : null,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.transparent),
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(color: theme.colorScheme.outline),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(color: theme.colorScheme.outline, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: Theme.of(context).primaryColor,
-            width: 2,
-          ),
+          borderRadius: BorderRadius.circular(30),
+          borderSide: BorderSide(color: theme.colorScheme.primary, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(color: theme.colorScheme.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(color: theme.colorScheme.error, width: 2),
         ),
         filled: true,
-        fillColor: Colors.grey.shade100,
+        fillColor: theme.colorScheme.surfaceVariant,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,
@@ -98,6 +98,7 @@ class MyTextForm extends StatelessWidget {
       minLines: minLines,
       autofocus: autofocus,
       textInputAction: textInputAction,
+
       style: theme.textTheme.bodyMedium?.copyWith(
         color:
             enabled

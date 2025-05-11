@@ -1,6 +1,6 @@
 import 'package:e_commerce/screens/login/screens/login_screen.dart';
-import 'package:e_commerce/screens/sign_up/screens/sign_up_screen.dart';
-import 'package:e_commerce/screens/home/home_screen.dart';
+import 'package:e_commerce/screens/main_screen/main_screen.dart';
+import 'package:e_commerce/screens/register/screens/register_screen.dart';
 import 'package:e_commerce/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,12 +20,14 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
           theme: ThemeApp.lightTheme,
-          initialRoute: LoginScreen.routeName,
+          initialRoute: MainScreen.routeName,
           routes: {
             LoginScreen.routeName: (context) => LoginScreen(),
-            SignUpScreen.routeName: (context) => SignUpScreen(),
-            HomeScreen.routeName: (context) => HomeScreen(),
+            RegisterScreen.routeName: (context) => RegisterScreen(),
+            MainScreen.routeName: (context) => MainScreen(),
+
           },
         );
       },

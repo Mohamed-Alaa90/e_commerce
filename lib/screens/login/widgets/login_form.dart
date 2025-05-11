@@ -26,7 +26,6 @@ class _LoginFormState extends State<LoginForm> {
         MyTextForm(
           controller: widget.emailController,
           labelText: "email",
-          hintText: 'enter your email',
           prefixIcon: Icons.email,
           keyboardType: TextInputType.emailAddress,
           validator: (val) {
@@ -42,7 +41,6 @@ class _LoginFormState extends State<LoginForm> {
         SizedBox(height: 16.h),
         MyTextForm(
           prefixIcon: Icons.password,
-          hintText: 'enter your password',
           controller: widget.passwordController,
           labelText: "password",
           keyboardType: TextInputType.visiblePassword,

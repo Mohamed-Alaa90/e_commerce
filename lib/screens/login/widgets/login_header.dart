@@ -19,6 +19,14 @@ class LoginHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
+        Text(
+          'Welcome Back',
+          style: theme.textTheme.headlineMedium?.copyWith(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w400,
+            color: theme.primaryColor,
+          ),
+        ),
       ],
     );
   }

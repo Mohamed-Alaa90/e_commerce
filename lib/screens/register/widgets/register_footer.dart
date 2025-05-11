@@ -4,8 +4,8 @@ import 'package:e_commerce/screens/login/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SignUpFooter extends StatelessWidget {
-  const SignUpFooter({super.key});
+class RegisterFooter extends StatelessWidget {
+  const RegisterFooter({super.key});
 
   @override
   Widget build(BuildContext context) {

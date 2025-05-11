@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MainNavigatorCubit extends Cubit<int> {
   MainNavigatorCubit() : super(0);
 
-  final List<Widget> taps = [
+  final List<Widget> screens = [
     HomeScreen(),
     CategoryScreen(),
     FavoritesScreen(),
@@ -19,5 +19,5 @@ class MainNavigatorCubit extends Cubit<int> {
     emit(index);
   }
 
-  Widget get currentScreen => taps[state];
+  Widget get currentScreen => screens[state];
 }

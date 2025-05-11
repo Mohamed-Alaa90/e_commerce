@@ -67,11 +67,11 @@ class MyTextForm extends StatelessWidget {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: theme.colorScheme.outline, width: 1),
+          borderSide: BorderSide(color: theme.primaryColor, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: theme.colorScheme.primary, width: 2),
+          borderSide: BorderSide(color: theme.primaryColor, width: 2),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
@@ -81,8 +81,8 @@ class MyTextForm extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide(color: theme.colorScheme.error, width: 2),
         ),
-        filled: true,
-        fillColor: theme.colorScheme.surfaceVariant,
+        //filled: true,
+        fillColor: theme.primaryColor,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 14,

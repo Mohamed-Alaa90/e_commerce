@@ -11,7 +11,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-   // final colorScheme = theme.colorScheme;
+    // final colorScheme = theme.colorScheme;
 
     return BlocProvider(
       create: (context) => MainNavigatorCubit(),
@@ -19,8 +19,10 @@ class MainScreen extends StatelessWidget {
         builder: (context) {
           return Scaffold(
             body: BlocSelector<MainNavigatorCubit, int, Widget>(
-              selector: (state) => context.read<MainNavigatorCubit>().currentScreen,
-              builder: (context, currentScreen) => SafeArea(child: currentScreen),
+              selector:
+                  (state) => context.read<MainNavigatorCubit>().currentScreen,
+              builder:
+                  (context, currentScreen) => SafeArea(child: currentScreen),
             ),
             bottomNavigationBar: BlocSelector<MainNavigatorCubit, int, int>(
               selector: (state) => state,
@@ -96,7 +98,10 @@ class MainScreen extends StatelessWidget {
       icon: Container(
         padding: EdgeInsets.all(8.sp),
         decoration: BoxDecoration(
-          color: isActive ? theme.primaryColor.withOpacity(0.1) : Colors.transparent,
+          color:
+              isActive
+                  ? theme.primaryColor.withOpacity(0.1)
+                  : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(isActive ? activeIcon : icon),

@@ -1,6 +1,7 @@
 import 'package:e_commerce/screens/login/screens/login_screen.dart';
 import 'package:e_commerce/screens/main_screen/main_screen.dart';
 import 'package:e_commerce/screens/register/screens/register_screen.dart';
+import 'package:e_commerce/screens/splash/splash.dart';
 import 'package:e_commerce/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,12 +23,12 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeApp.lightTheme,
-          initialRoute: MainScreen.routeName,
+          initialRoute: SplashScreen.routeName,
           routes: {
             LoginScreen.routeName: (context) => LoginScreen(),
             RegisterScreen.routeName: (context) => RegisterScreen(),
             MainScreen.routeName: (context) => MainScreen(),
-
+            SplashScreen.routeName : (context )=> SplashScreen(),
           },
         );
       },

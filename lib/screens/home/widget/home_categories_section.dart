@@ -46,7 +46,6 @@ class HomeCategoriesSection extends StatelessWidget {
           SizedBox(
             height: 150.h,
             child: ListView.separated(
-
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
               separatorBuilder: (_, __) => SizedBox(width: 12.w),
@@ -60,6 +59,7 @@ class HomeCategoriesSection extends StatelessWidget {
     );
   }
 }
+
 class CategoryItem {
   final String title;
   final String imagePath;

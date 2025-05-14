@@ -8,4 +8,10 @@ class LoginCubit extends Cubit<LoginStates> {
   bool isLoading = false;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+
+
+  login(){
+
+  }
 }

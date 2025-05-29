@@ -1,14 +1,22 @@
-import 'package:e_commerce/cubit/auth/auth_cubit.dart';
-import 'package:e_commerce/screens/main_page.dart';
-import 'package:e_commerce/screens/register/register_page.dart';
+import 'package:dio/dio.dart';
+import 'package:e_commerce/core/api/dio_consumer.dart';
+import 'package:e_commerce/screens/auth/cubit/auth_cubit.dart';
+import 'package:e_commerce/screens/auth/forgot_password/forgot_password_page.dart';
+import 'package:e_commerce/screens/auth/login/login_page.dart';
+import 'package:e_commerce/screens/auth/register/register_page.dart';
+import 'package:e_commerce/screens/auth/verify_code_page.dart';
+import 'package:e_commerce/screens/main/main_page.dart';
+import 'package:e_commerce/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
+  setupLocator();
   runApp(
     BlocProvider(
       //
-      create: (context) => AuthCubit(),
+      create: (context) => getIt<AuthCubit>(),
       child: MyApp(),
     ),
   );
@@ -19,12 +27,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: RegisterPage.route,
-      routes: {
-        MainPage.route: (context) => MainPage(),
-        RegisterPage.route: (context) => RegisterPage(),
-      },
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        theme: ThemeData(useMaterial3: true),
+        initialRoute: LoginPage.route,
+        routes: {
+          MainPage.route: (context) => MainPage(),
+          RegisterPage.route: (context) => RegisterPage(),
+          LoginPage.route: (context) => LoginPage(),
+          ForgotPasswordPage.route: (context) => ForgotPasswordPage(),
+          VerifyCodePage.route: (context) => VerifyCodePage(),
+        },
+      ),
     );
   }
 }

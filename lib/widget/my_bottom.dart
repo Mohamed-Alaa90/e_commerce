@@ -2,26 +2,39 @@ import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
 
 class MyBottom extends StatelessWidget {
-  const MyBottom({super.key, required this.text, required this.onPressed});
+  const MyBottom({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.borderRadius,
+    this.color,
+    this.height,
+    this.width,
+  });
 
   final String text;
-
   final void Function() onPressed;
+  final double? borderRadius;
+  final Color? color;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedButton(
-      height: 50,
-      width: 150,
-
+      height: height ?? 50,
+      width: width ?? 150,
+      onPressed: onPressed,
+      borderRadius: borderRadius ?? 15,
+      color: color ?? Colors.deepPurple,
       child: Text(
         text,
         style: const TextStyle(
+          fontSize: 17,
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
       ),
-      onPressed: onPressed,
     );
   }
 }

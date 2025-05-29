@@ -8,6 +8,7 @@ class MyTextFormField extends StatelessWidget {
     this.hintText,
     this.suffixIcon,
     this.prefixIcon,
+    this.validator,
   });
 
   final TextEditingController? controller;
@@ -15,6 +16,7 @@ class MyTextFormField extends StatelessWidget {
   final String? hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +24,17 @@ class MyTextFormField extends StatelessWidget {
       //
       controller: controller,
       cursorColor: Colors.black,
-
+      validator: validator,
       decoration: InputDecoration(
         labelText: labelText,
         labelStyle: const TextStyle(color: Colors.grey),
         hintText: hintText,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
+        border: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.black),
+          borderRadius: BorderRadius.circular(15)
+        ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: const BorderSide(color: Colors.black),

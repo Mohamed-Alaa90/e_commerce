@@ -9,6 +9,7 @@ class MyTextFormField extends StatelessWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.validator,
+    this.keyboardType,
   });
 
   final TextEditingController? controller;
@@ -17,11 +18,13 @@ class MyTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       //
+      keyboardType: keyboardType,
       controller: controller,
       cursorColor: Colors.black,
       validator: validator,
@@ -33,7 +36,7 @@ class MyTextFormField extends StatelessWidget {
         suffixIcon: suffixIcon,
         border: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.black),
-          borderRadius: BorderRadius.circular(15)
+          borderRadius: BorderRadius.circular(15),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),

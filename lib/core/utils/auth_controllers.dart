@@ -10,11 +10,14 @@ class AuthControllers {
       TextEditingController();
 
   final GlobalKey<FormState> registerFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> loginFormKey = GlobalKey();
+  final GlobalKey<FormState> loginFormKey = GlobalKey();
 
-  TextEditingController loginPasswordController = TextEditingController();
-  TextEditingController loginEmailController = TextEditingController();
-  TextEditingController forgotPasswordController = TextEditingController();
+  final TextEditingController loginPasswordController = TextEditingController();
+  final TextEditingController loginEmailController = TextEditingController();
+  final TextEditingController forgotPasswordController =
+      TextEditingController();
+
+  final TextEditingController verifyCodeController = TextEditingController();
 
   void clear() {
     registerEmailController.clear();

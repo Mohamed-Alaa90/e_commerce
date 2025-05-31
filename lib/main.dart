@@ -1,10 +1,9 @@
-import 'package:dio/dio.dart';
-import 'package:e_commerce/core/api/dio_consumer.dart';
+
 import 'package:e_commerce/screens/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/screens/auth/forgot_password/forgot_password_page.dart';
 import 'package:e_commerce/screens/auth/login/login_page.dart';
 import 'package:e_commerce/screens/auth/register/register_page.dart';
-import 'package:e_commerce/screens/auth/verify_code_page.dart';
+import 'package:e_commerce/screens/auth/forgot_password/verify_code_page.dart';
 import 'package:e_commerce/screens/main/main_page.dart';
 import 'package:e_commerce/service_locator.dart';
 import 'package:flutter/material.dart';

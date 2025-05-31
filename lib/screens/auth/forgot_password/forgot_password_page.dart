@@ -1,6 +1,6 @@
 import 'package:e_commerce/screens/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/screens/auth/cubit/auth_state.dart';
-import 'package:e_commerce/screens/auth/verify_code_page.dart';
+import 'package:e_commerce/screens/auth/forgot_password/verify_code_page.dart';
 import 'package:e_commerce/service_locator.dart';
 import 'package:e_commerce/widget/my_bottom.dart';
 import 'package:e_commerce/widget/my_text_form_field.dart';
@@ -16,68 +16,113 @@ class ForgotPasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: getIt<AuthCubit>(),
-      child: BlocConsumer<AuthCubit, AuthState>(
-        listener: (context, state) {
-          if (state is AuthCodeSent) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('تم إرسال الكود بنجاح، تفقد بريدك')),
-            );
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text(
+            'Forgot Password',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.black38,
+            ),
+          ),
+        ),
+        body: BlocConsumer<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthCodeSentSuccess) {
+              context.read<AuthCubit>().clearControllers();
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                showDialog(
+                  context: context,
+                  builder:
+                      (context) => AlertDialog(
+                        title: const Text('Success'),
+                        content: const Text('تم ارسال الكود الي بريدك'),
+                        actions: [
+                          TextButton(
+                            onPressed:
+                                () => Navigator.pushNamed(
+                                  context,
+                                  VerifyCodePage.route,
+                                  arguments:
+                                      context
+                                          .read<AuthCubit>()
+                                          .authControllers
+                                          .forgotPasswordController
+                                          .text
+                                          .trim(),
+                                ),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                );
+              });
+            }
 
-            Navigator.pushNamed(context, VerifyCodePage.route, arguments:
-            context.read<AuthCubit>().authControllers.forgotPasswordController.text.trim());
-          }
+            if (state is AuthCodeSentError) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                showDialog(
+                  context: context,
+                  builder:
+                      (context) => AlertDialog(
+                        title: const Text('Error'),
+                        content: Text((state).errorMessage),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                );
+              });
+            }
+          },
+          builder: (context, state) {
+            final cubit = BlocProvider.of<AuthCubit>(context);
 
-          if (state is ErrorAuthState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage)),
-            );
-          }
-        },
-        builder: (context, state) {
-          final cubit = context.read<AuthCubit>();
-
-          return Scaffold(
-            body: Padding(
+            return Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back_ios),
-                  ),
-                  const SizedBox(height: 50),
-                  const Text(
-                    'Forgot Password',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 35,
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  MyTextFormField(
-                    controller: cubit.authControllers.forgotPasswordController,
-                    hintText: 'Enter Your Email',
-                  ),
-                  const SizedBox(height: 25),
-                  if (state is LoadingAuthState)
-                    const Center(child: CircularProgressIndicator())
-                  else
-                    Center(
-                      child: MyBottom(
-                        text: "Send",
-                        onPressed: () => cubit.forgotPassword(),
-                        color: Colors.purple,
-                        borderRadius: 30,
-                        height: 50,
-                        width: 300,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 50),
+                    const Text(
+                      'Check Email',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35,
                       ),
                     ),
-                ],
+                    const SizedBox(height: 30),
+                    MyTextFormField(
+                      controller:
+                          cubit.authControllers.forgotPasswordController,
+                      hintText: 'Enter Your Email',
+                    ),
+                    const SizedBox(height: 30),
+                    if (state is AuthCodeSentLoading)
+                      const Center(child: CircularProgressIndicator())
+                    else
+                      Center(
+                        child: MyBottom(
+                          text: 'Send',
+                          onPressed: () => cubit.forgotPassword(),
+                          color: Colors.purple,
+                          borderRadius: 30,
+                          height: 50,
+                          width: 350,
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

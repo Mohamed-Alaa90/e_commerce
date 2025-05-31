@@ -55,12 +55,22 @@ class LoginPage extends StatelessWidget {
             Navigator.pushReplacementNamed(context, MainPage.route);
           }
           if (state is ErrorAuthState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                backgroundColor: Colors.red,
-                content: Text(state.errorMessage),
-              ),
-            );
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              showDialog(
+                context: context,
+                builder:
+                    (context) => AlertDialog(
+                      title: const Text("Error"),
+                      content: Text((state).errorMessage),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text("OK"),
+                        ),
+                      ],
+                    ),
+              );
+            });
           }
         },
       ),

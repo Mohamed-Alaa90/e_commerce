@@ -62,18 +62,20 @@ class AuthCubit extends Cubit<AuthState> {
 
   void forgotPassword() async {
     try {
-      emit(LoadingAuthState());
-      await apiConsumer.post(
+      emit(AuthCodeSentLoading());
+   await apiConsumer.post(
         EndPoints.forgotPasswords,
         data: {ApiKeys.email: authControllers.forgotPasswordController.text},
       );
-      emit(AuthCodeSent());
+     
+      emit(AuthCodeSentSuccess());
     } on ServerException catch (e) {
       final errorMessage =
           e.errorModel.errors?.msg ??
           e.errorModel.message ??
           'حدث خطأ غير متوقع';
-      emit(ErrorAuthState(errorMessage: errorMessage));
+      emit(AuthCodeSentError(errorMessage: errorMessage));
     }
   }
+  
 }

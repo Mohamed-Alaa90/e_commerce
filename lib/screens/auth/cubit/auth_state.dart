@@ -18,4 +18,20 @@ class ErrorAuthState extends AuthState {
   ErrorAuthState({required this.errorMessage});
 }
 
-class AuthCodeSent extends AuthState {}
+class AuthCodeSentSuccess extends AuthState {}
+
+class AuthCodeSentError extends AuthState {
+  final String errorMessage;
+  AuthCodeSentError({required this.errorMessage});
+}
+
+class AuthCodeSentLoading extends AuthState {}
+
+class VerifyResetCodeSuccess extends AuthState {}
+
+class VerifyResetCodeError extends AuthState {
+  final String errorMessage;
+  VerifyResetCodeError({required this.errorMessage});
+}
+
+class VerifyResetCodeLoading extends AuthState {}

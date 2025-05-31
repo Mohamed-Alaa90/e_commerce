@@ -1,6 +1,7 @@
-
+import 'package:e_commerce/core/utils/shared_prefs_helper.dart';
 import 'package:e_commerce/screens/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/screens/auth/forgot_password/forgot_password_page.dart';
+import 'package:e_commerce/screens/auth/forgot_password/reset_password.dart';
 import 'package:e_commerce/screens/auth/login/login_page.dart';
 import 'package:e_commerce/screens/auth/register/register_page.dart';
 import 'package:e_commerce/screens/auth/forgot_password/verify_code_page.dart';
@@ -10,8 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
+  await SharedPrefsHelper.cacheInitializatin();
   runApp(
     BlocProvider(
       //
@@ -39,6 +42,7 @@ class MyApp extends StatelessWidget {
           LoginPage.route: (context) => LoginPage(),
           ForgotPasswordPage.route: (context) => ForgotPasswordPage(),
           VerifyCodePage.route: (context) => VerifyCodePage(),
+          ResetPassword.route: (context) => ResetPassword(),
         },
       ),
     );

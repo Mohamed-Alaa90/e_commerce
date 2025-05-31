@@ -18,6 +18,7 @@ class ErrorAuthState extends AuthState {
   ErrorAuthState({required this.errorMessage});
 }
 
+/// sendCode
 class AuthCodeSentSuccess extends AuthState {}
 
 class AuthCodeSentError extends AuthState {
@@ -27,6 +28,7 @@ class AuthCodeSentError extends AuthState {
 
 class AuthCodeSentLoading extends AuthState {}
 
+/// VerifyResetCode
 class VerifyResetCodeSuccess extends AuthState {}
 
 class VerifyResetCodeError extends AuthState {
@@ -35,3 +37,14 @@ class VerifyResetCodeError extends AuthState {
 }
 
 class VerifyResetCodeLoading extends AuthState {}
+
+/// resetPassword
+class ResetPasswordSuccess extends AuthState {}
+
+class ResetPasswordError extends AuthState {
+  final String errorMessage;
+
+  ResetPasswordError({required this.errorMessage});
+}
+
+class ResetPasswordLoading extends AuthState {}

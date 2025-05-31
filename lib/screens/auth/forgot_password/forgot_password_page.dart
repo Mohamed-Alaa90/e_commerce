@@ -41,24 +41,25 @@ class ForgotPasswordPage extends StatelessWidget {
                         content: const Text('تم ارسال الكود الي بريدك'),
                         actions: [
                           TextButton(
-                            onPressed:
-                                () => Navigator.pushNamed(
-                                  context,
-                                  VerifyCodePage.route,
-                                  arguments:
-                                      context
-                                          .read<AuthCubit>()
-                                          .authControllers
-                                          .forgotPasswordController
-                                          .text
-                                          .trim(),
-                                ),
+                            onPressed: () => Navigator.pop(context),
                             child: const Text('OK'),
                           ),
                         ],
                       ),
                 );
               });
+
+              Navigator.pushNamed(
+                context,
+                VerifyCodePage.route,
+                arguments:
+                    context
+                        .read<AuthCubit>()
+                        .authControllers
+                        .forgotPasswordController
+                        .text
+                        .trim(),
+              );
             }
 
             if (state is AuthCodeSentError) {
@@ -99,6 +100,7 @@ class ForgotPasswordPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     MyTextFormField(
+                      suffixIcon: const Icon(Icons.email_outlined),
                       controller:
                           cubit.authControllers.forgotPasswordController,
                       hintText: 'Enter Your Email',

@@ -1,11 +1,11 @@
 import 'package:e_commerce/screens/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/screens/auth/cubit/auth_state.dart';
+import 'package:e_commerce/screens/auth/forgot_password/reset_password.dart';
 import 'package:e_commerce/service_locator.dart';
 import 'package:e_commerce/widget/my_bottom.dart';
 import 'package:e_commerce/widget/my_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 
 class VerifyCodePage extends StatelessWidget {
   const VerifyCodePage({super.key});
@@ -19,7 +19,9 @@ class VerifyCodePage extends StatelessWidget {
       value: getIt<AuthCubit>(),
       child: BlocConsumer<AuthCubit, AuthState>(
         builder: (context, state) {
+          final cubit = context.read<AuthCubit>();
           return Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               title: const Text(
                 'Verify Code',
@@ -31,59 +33,98 @@ class VerifyCodePage extends StatelessWidget {
               ),
               centerTitle: true,
             ),
-            body: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(30.0),
-                child: Column(
-                  children: [
-                    //
-                    const SizedBox(height: 50),
-                    Text('الرجاء ادخال الكود المرسل إلى $email'),
-                    const SizedBox(height: 50),
-                    PinCodeTextField(
-                      appContext: context,
-                      length: 6,
-                      obscureText: false,
-                      animationType: AnimationType.fade,
-                      pinTheme: PinTheme(
-                        shape: PinCodeFieldShape.box,
-                        borderRadius: BorderRadius.circular(5),
-                        fieldHeight: 50,
-                        fieldWidth: 40,
-                        activeFillColor: Colors.white,
-                        selectedFillColor: Colors.white,
-                        inactiveFillColor: Colors.white,
-                        activeColor: Colors.blue,
-                        selectedColor: Colors.blue,
-                        inactiveColor: Colors.grey,
-                      ),
-                      animationDuration: const Duration(milliseconds: 300),
-                      backgroundColor: Colors.transparent,
-                      enableActiveFill: true,
-                      controller:
-                          context
-                              .read<AuthCubit>()
-                              .authControllers
-                              .verifyCodeController,
-                      keyboardType: TextInputType.number,
-                      onCompleted: (value) {
-                        // هنا تقدر تعمل check مباشرة بعد إدخال الكود
-                        print("Completed: $value");
-                      },
-                      onChanged: (value) {
-                        // تحديث الحالة لو عايز
-                      },
-                    ),
-                    const SizedBox(height: 50),
+            body: Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Form(
+                    key: cubit.authControllers.verifyCodeFormKey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Column(
+                        children: [
+                          //
+                          const SizedBox(height: 50),
+                          Text('الرجاء ادخال الكود المرسل إلى $email'),
+                          const SizedBox(height: 50),
+                          MyTextFormField(
+                            hintText: 'ENTER CODE',
+                            controller:
+                                cubit.authControllers.verifyCodeController,
+                            keyboardType: TextInputType.number,
 
-                    MyBottom(text: 'Check', onPressed: () {}),
-                  ],
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'الرجاء إدخال رمز التحقق';
+                              }
+
+                              if (!RegExp(r'^\d{6}$').hasMatch(value)) {
+                                return 'الرمز يجب أن يحتوي على أرقام فقط';
+                              }
+                              return null; // valid
+                            },
+                          ),
+                          const SizedBox(height: 50),
+                          if (state is AuthCodeSentLoading)
+                            const Center(child: CircularProgressIndicator())
+                          else
+                            Center(
+                              child: MyBottom(
+                                text: 'Send',
+                                onPressed: () {
+                                  if (cubit
+                                      .authControllers
+                                      .verifyCodeFormKey
+                                      .currentState!
+                                      .validate()) {
+                                    cubit.verifyResetCode();
+                                  }
+                                },
+                                color: Colors.purple,
+                                borderRadius: 30,
+                                height: 50,
+                                width: 350,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                if (state is VerifyResetCodeLoading)
+                  Container(
+                    color: Colors.black.withOpacity(0.5),
+                    child: const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    ),
+                  ),
+              ],
             ),
           );
         },
-        listener: (context, state) {},
+        listener: (context, state) {
+          if (state is VerifyResetCodeError) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
+          }
+          if (state is VerifyResetCodeSuccess) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(const SnackBar(content: Text('Success')));
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              ResetPassword.route,
+              (route) => false,
+              arguments:
+                  context
+                      .read<AuthCubit>()
+                      .authControllers
+                      .forgotPasswordController
+                      .text
+                      .trim(),
+            );
+          }
+        },
       ),
     );
   }

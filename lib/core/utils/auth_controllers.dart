@@ -18,6 +18,9 @@ class AuthControllers {
       TextEditingController();
 
   final TextEditingController verifyCodeController = TextEditingController();
+  final GlobalKey<FormState> verifyCodeFormKey = GlobalKey();
+
+  final TextEditingController newPasswordController = TextEditingController();
 
   void clear() {
     registerEmailController.clear();
@@ -27,5 +30,7 @@ class AuthControllers {
     registerRePasswordController.clear();
     loginPasswordController.clear();
     loginEmailController.clear();
+    verifyCodeController.clear();
+    newPasswordController.clear();
   }
 }

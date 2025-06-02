@@ -42,6 +42,7 @@ class DioConsumer extends ApiConsumer {
   Future get(
     String path, {
     Object? data,
+    Options? options,
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
@@ -49,6 +50,7 @@ class DioConsumer extends ApiConsumer {
         path,
         data: data,
         queryParameters: queryParameters,
+        options: options,
       );
       return response.data;
     } on DioException catch (e) {

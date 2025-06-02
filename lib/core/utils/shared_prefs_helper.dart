@@ -16,9 +16,11 @@ class SharedPrefsHelper {
 
   static String? getCacheData({required String key}) {
     return sharedPref.getString(key);
+    
   }
 
   static Future<bool> deleteCacheItem({required String key}) async {
     return await sharedPref.remove(key);
+    
   }
 }

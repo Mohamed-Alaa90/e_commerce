@@ -1,4 +1,5 @@
 import 'package:animated_button/animated_button.dart';
+import 'package:e_commerce/core/theme/my_colors.dart';
 import 'package:flutter/material.dart';
 
 class MyBottom extends StatelessWidget {
@@ -26,7 +27,7 @@ class MyBottom extends StatelessWidget {
       width: width ?? 150,
       onPressed: onPressed,
       borderRadius: borderRadius ?? 15,
-      color: color ?? Colors.deepPurple,
+      color: color ?? MyColors.kprimerColors,
       child: Text(
         text,
         style: const TextStyle(

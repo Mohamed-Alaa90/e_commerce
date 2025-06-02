@@ -6,6 +6,7 @@ import 'package:e_commerce/screens/auth/login/login_page.dart';
 import 'package:e_commerce/screens/auth/register/register_page.dart';
 import 'package:e_commerce/screens/auth/forgot_password/verify_code_page.dart';
 import 'package:e_commerce/screens/main/main_page.dart';
+import 'package:e_commerce/screens/splash/splash_page.dart';
 import 'package:e_commerce/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-  await SharedPrefsHelper.cacheInitializatin();
+  await SharedPrefsHelper.cacheInitialization();
   runApp(
     BlocProvider(
       //
@@ -35,9 +36,10 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       child: MaterialApp(
         theme: ThemeData(useMaterial3: true),
-        initialRoute: LoginPage.route,
+        initialRoute: SplashPage.route,
         routes: {
           MainPage.route: (context) => MainPage(),
+          SplashPage.route: (context) => SplashPage(),
           RegisterPage.route: (context) => RegisterPage(),
           LoginPage.route: (context) => LoginPage(),
           ForgotPasswordPage.route: (context) => ForgotPasswordPage(),

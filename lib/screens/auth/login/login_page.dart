@@ -38,7 +38,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
               ),
-              if (state is LoadingAuthState)
+              if (state is LoadingLoginState)
                 Container(
                   color: Colors.black.withOpacity(0.5),
                   child: const Center(
@@ -49,12 +49,12 @@ class LoginPage extends StatelessWidget {
           );
         },
         listener: (context, state) {
-          if (state is SuccessAuthState) {
+          if (state is SuccessLoginState) {
             cubit.clearControllers();
 
             Navigator.pushReplacementNamed(context, MainPage.route);
           }
-          if (state is ErrorAuthState) {
+          if (state is ErrorLoginState) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               showDialog(
                 context: context,

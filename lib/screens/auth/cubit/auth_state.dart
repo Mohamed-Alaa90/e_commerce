@@ -3,19 +3,34 @@ import '../../../models/AuthModel.dart';
 abstract class AuthState {}
 
 class InitAuthState extends AuthState {}
+///register
 
-class LoadingAuthState extends AuthState {}
+class LoadingRegisterState extends AuthState {}
 
-class SuccessAuthState extends AuthState {
-  final AuthModel loginModel;
+class SuccessRegisterState extends AuthState {
 
-  SuccessAuthState(this.loginModel);
 }
 
-class ErrorAuthState extends AuthState {
+class ErrorRegisterState extends AuthState {
   final String errorMessage;
 
-  ErrorAuthState({required this.errorMessage});
+  ErrorRegisterState({required this.errorMessage});
+}
+
+/// login
+
+class LoadingLoginState extends AuthState {}
+
+class SuccessLoginState extends AuthState {
+  final AuthModel loginModel;
+
+  SuccessLoginState(this.loginModel);
+}
+
+class ErrorLoginState extends AuthState {
+  final String errorMessage;
+
+  ErrorLoginState({required this.errorMessage});
 }
 
 /// sendCode
@@ -48,3 +63,13 @@ class ResetPasswordError extends AuthState {
 }
 
 class ResetPasswordLoading extends AuthState {}
+
+/// verifyToken
+class VerifyTokenLoading extends AuthState {}
+
+class VerifyTokenSuccess extends AuthState {}
+
+class VerifyTokenError extends AuthState {
+  final String errorMessage;
+  VerifyTokenError({required this.errorMessage});
+}

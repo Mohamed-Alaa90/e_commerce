@@ -37,7 +37,7 @@ class RegisterPage extends StatelessWidget {
                   ),
                 ),
               ),
-              if (state is LoadingAuthState)
+              if (state is LoadingRegisterState)
                 Container(
                   color: Colors.black.withOpacity(0.5),
                   child: const Center(
@@ -48,7 +48,7 @@ class RegisterPage extends StatelessWidget {
           );
         },
         listener: (context, state) {
-          if (state is SuccessAuthState) {
+          if (state is SuccessRegisterState) {
             context.read<AuthCubit>().clearControllers();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -58,7 +58,7 @@ class RegisterPage extends StatelessWidget {
             );
             Navigator.pushReplacementNamed(context, LoginPage.route);
           }
-          if (state is ErrorAuthState) {
+          if (state is ErrorRegisterState) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: Colors.red,

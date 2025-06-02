@@ -86,6 +86,7 @@ class ResetPassword extends StatelessWidget {
                       Align(
                         alignment: Alignment.center,
                         child: MyBottom(
+                          
                           text: 'send',
                           onPressed: () => cubit.resetPassword(email),
                           

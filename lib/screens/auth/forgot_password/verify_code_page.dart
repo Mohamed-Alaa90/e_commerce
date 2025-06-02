@@ -1,3 +1,4 @@
+import 'package:e_commerce/core/theme/my_colors.dart';
 import 'package:e_commerce/screens/auth/cubit/auth_cubit.dart';
 import 'package:e_commerce/screens/auth/cubit/auth_state.dart';
 import 'package:e_commerce/screens/auth/forgot_password/reset_password.dart';
@@ -79,7 +80,7 @@ class VerifyCodePage extends StatelessWidget {
                                     cubit.verifyResetCode();
                                   }
                                 },
-                                color: Colors.purple,
+                                color: MyColors.kprimerColors,
                                 borderRadius: 30,
                                 height: 50,
                                 width: 350,

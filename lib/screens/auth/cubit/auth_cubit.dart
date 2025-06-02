@@ -1,8 +1,12 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:e_commerce/core/api/api_consumer.dart';
 import 'package:e_commerce/core/api/end_points.dart';
 import 'package:e_commerce/core/errors/exceptions.dart';
 import 'package:e_commerce/core/utils/shared_prefs_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import '../../../core/utils/auth_controllers.dart';
 import '../../../models/AuthModel.dart';
 import 'auth_state.dart';
@@ -16,10 +20,10 @@ class AuthCubit extends Cubit<AuthState> {
     authControllers.clear();
   }
 
-  void register() async {
+  Future<void> register() async {
     try {
-      emit(LoadingAuthState());
-      final response = await apiConsumer.post(
+      emit(LoadingRegisterState());
+      await apiConsumer.post(
         EndPoints.signUp,
         data: {
           ApiKeys.name: authControllers.registerNameController.text,
@@ -29,19 +33,19 @@ class AuthCubit extends Cubit<AuthState> {
           ApiKeys.phone: authControllers.registerPhoneController.text,
         },
       );
-      emit(SuccessAuthState(response));
+      emit(SuccessRegisterState());
     } on ServerException catch (e) {
       final errorMessage =
           e.errorModel.errors?.msg ??
           e.errorModel.message ??
           'حدث خطأ غير متوقع';
-      emit(ErrorAuthState(errorMessage: errorMessage));
+      emit(ErrorRegisterState(errorMessage: errorMessage));
     }
   }
 
-  void login() async {
+  Future<void> login() async {
     try {
-      emit(LoadingAuthState());
+      emit(LoadingLoginState());
       final response = await apiConsumer.post(
         EndPoints.signIn,
         data: {
@@ -50,21 +54,32 @@ class AuthCubit extends Cubit<AuthState> {
         },
       );
       var user = AuthModel.fromJson(response);
+
+      final decodedToken = JwtDecoder.decode(user.token);
       await SharedPrefsHelper.insertToCache(
         key: CacheKeys.token,
         value: user.token,
       );
-      emit(SuccessAuthState(user));
+      await SharedPrefsHelper.insertToCache(
+        key: 'id',
+        value: decodedToken['id'],
+      );
+      if (JwtDecoder.isExpired(user.token)) {
+        emit(ErrorLoginState(errorMessage: 'انتهت صلاحية التوكن'));
+        return;
+      }
+
+      emit(SuccessLoginState(user));
     } on ServerException catch (e) {
       final errorMessage =
           e.errorModel.errors?.msg ??
           e.errorModel.message ??
           'حدث خطأ غير متوقع';
-      emit(ErrorAuthState(errorMessage: errorMessage));
+      emit(ErrorLoginState(errorMessage: errorMessage));
     }
   }
 
-  void forgotPassword() async {
+  Future<void> forgotPassword() async {
     try {
       emit(AuthCodeSentLoading());
       await apiConsumer.post(
@@ -82,7 +97,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void verifyResetCode() async {
+  Future<void> verifyResetCode() async {
     try {
       emit(VerifyResetCodeLoading());
       await apiConsumer.post(
@@ -99,7 +114,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void resetPassword(String email) async {
+  Future<void> resetPassword(String email) async {
     try {
       emit(ResetPasswordLoading());
 
@@ -118,6 +133,35 @@ class AuthCubit extends Cubit<AuthState> {
           e.errorModel.message ??
           'حدث خطأ غير متوقع';
       emit(AuthCodeSentError(errorMessage: errorMessage));
+    }
+  }
+
+  Future<void> verifyToken() async {
+    try {
+      emit(VerifyTokenLoading());
+
+      final token = SharedPrefsHelper.getCacheData(key: CacheKeys.token);
+      if (token == null || token.isEmpty) {
+        emit(VerifyTokenError(errorMessage: 'التوكن غير موجود'));
+        return;
+      }
+      SharedPrefsHelper.getCacheData(key: CacheKeys.token);
+
+      await apiConsumer.get(
+        EndPoints.verifyToken,
+        options: Options(
+          headers: {
+            'token': SharedPrefsHelper.getCacheData(key: CacheKeys.token),
+          },
+        ),
+      );
+      emit(VerifyTokenSuccess());
+    } on ServerException catch (e) {
+      final errorMessage =
+          e.errorModel.errors?.msg ??
+          e.errorModel.message ??
+          'حدث خطأ غير متوقع';
+      emit(VerifyTokenError(errorMessage: errorMessage));
     }
   }
 }

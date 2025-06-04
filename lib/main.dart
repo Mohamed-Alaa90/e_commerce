@@ -1,28 +1,13 @@
-import 'package:e_commerce/core/utils/shared_prefs_helper.dart';
-import 'package:e_commerce/screens/auth/cubit/auth_cubit.dart';
-import 'package:e_commerce/screens/auth/forgot_password/forgot_password_page.dart';
-import 'package:e_commerce/screens/auth/forgot_password/reset_password.dart';
-import 'package:e_commerce/screens/auth/login/login_page.dart';
-import 'package:e_commerce/screens/auth/register/register_page.dart';
-import 'package:e_commerce/screens/auth/forgot_password/verify_code_page.dart';
-import 'package:e_commerce/screens/main/main_page.dart';
-import 'package:e_commerce/screens/splash/splash_page.dart';
-import 'package:e_commerce/service_locator.dart';
+import 'package:e_commerce/pages/screens/category/category_screen.dart';
+import 'package:e_commerce/pages/screens/favoret/favoret_screen.dart';
+import 'package:e_commerce/pages/screens/home/home.dart';
+import 'package:e_commerce/pages/screens/main/main.dart';
+import 'package:e_commerce/pages/screens/profile/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
-  await SharedPrefsHelper.cacheInitialization();
-  runApp(
-    BlocProvider(
-      //
-      create: (context) => getIt<AuthCubit>(),
-      child: MyApp(),
-    ),
-  );
+void main() {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -35,16 +20,14 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        theme: ThemeData(useMaterial3: true),
-        initialRoute: SplashPage.route,
+        debugShowCheckedModeBanner: false,
+        initialRoute: Main.route,
         routes: {
-          MainPage.route: (context) => MainPage(),
-          SplashPage.route: (context) => SplashPage(),
-          RegisterPage.route: (context) => RegisterPage(),
-          LoginPage.route: (context) => LoginPage(),
-          ForgotPasswordPage.route: (context) => ForgotPasswordPage(),
-          VerifyCodePage.route: (context) => VerifyCodePage(),
-          ResetPassword.route: (context) => ResetPassword(),
+          Home.route: (context) => Home(),
+          Main.route: (context) => Main(),
+          Profile.route: (context) => Profile(),
+          FavoretScreen.route: (context) => FavoretScreen(),
+          CategoryScreen.route: (context) => CategoryScreen(),
         },
       ),
     );

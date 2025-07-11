@@ -1,13 +1,22 @@
-import 'package:e_commerce/pages/screens/category/category_screen.dart';
-import 'package:e_commerce/pages/screens/favoret/favoret_screen.dart';
-import 'package:e_commerce/pages/screens/home/home.dart';
-import 'package:e_commerce/pages/screens/main/main.dart';
-import 'package:e_commerce/pages/screens/profile/profile.dart';
+import 'package:e_commerce/core/helper/on_generatr_routes.dart';
+import 'package:e_commerce/core/theme/app_theme.dart';
+import 'package:e_commerce/features/splash/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'lib/core/translations',
+      fallbackLocale: const Locale('ar'),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -19,17 +28,17 @@ class MyApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: Main.route,
-        routes: {
-          Home.route: (context) => Home(),
-          Main.route: (context) => Main(),
-          Profile.route: (context) => Profile(),
-          FavoretScreen.route: (context) => FavoretScreen(),
-          CategoryScreen.route: (context) => CategoryScreen(),
-        },
-      ),
+      builder: (context, child) {
+        return MaterialApp(
+          locale: context.locale,
+          supportedLocales: context.supportedLocales,
+          localizationsDelegates: context.localizationDelegates,
+          theme: MyTheme.lightTheme,
+          onGenerateRoute: onGenerateRoute,
+          initialRoute: SplashView.routeName,
+          debugShowCheckedModeBanner: false,
+        );
+      },
     );
   }
 }

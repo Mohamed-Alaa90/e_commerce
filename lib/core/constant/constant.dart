@@ -12,4 +12,7 @@ abstract class AppAssets {
       'assets/image/background_on_boarding_one.svg';
   static String onBoardingBackGroundImage2 =
       'assets/image/background_on_boarding_two.svg';
+
+  static String googleIcon = 'assets/icons/icon-google.svg';
+  static String facebookIcon = 'assets/icons/icon-facebook.svg';
 }

@@ -10,7 +10,8 @@ class SplashViewBody extends StatefulWidget {
   State<SplashViewBody> createState() => _SplashViewBodyState();
 }
 
-class _SplashViewBodyState extends State<SplashViewBody> with TickerProviderStateMixin {
+class _SplashViewBodyState extends State<SplashViewBody>
+    with TickerProviderStateMixin {
   late AnimationController _fadeInController;
   late AnimationController _slideController;
 
@@ -46,20 +47,19 @@ class _SplashViewBodyState extends State<SplashViewBody> with TickerProviderStat
       children: [
         FadeTransition(
           opacity: _fadeInController,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [SvgPicture.asset(AppAssets.splashHead)],
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: SvgPicture.asset(AppAssets.splashHead),
           ),
         ),
 
         SlideTransition(
           position: Tween<Offset>(
-            begin: const Offset(0, 0.5), 
-            end: Offset.zero, 
-          ).animate(CurvedAnimation(
-            parent: _slideController,
-            curve: Curves.easeInOut,
-          )),
+            begin: const Offset(0, 0.5),
+            end: Offset.zero,
+          ).animate(
+            CurvedAnimation(parent: _slideController, curve: Curves.easeInOut),
+          ),
           child: SvgPicture.asset(AppAssets.splashCenter),
         ),
 

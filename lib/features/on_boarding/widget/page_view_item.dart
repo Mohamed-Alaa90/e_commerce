@@ -1,8 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:e_commerce/features/auth/login/view/login_view.dart';
+import 'package:e_commerce/features/home/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../../../core/theme/app_theme.dart';
 
 class PageViewItem extends StatelessWidget {
   const PageViewItem({
@@ -11,11 +14,13 @@ class PageViewItem extends StatelessWidget {
     required this.backGroundImage,
     required this.tittle,
     required this.subTitle,
+    required this.isVisibility,
   });
 
   final String image, backGroundImage;
   final Widget tittle;
   final String subTitle;
+  final bool isVisibility;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,22 @@ class PageViewItem extends StatelessWidget {
                 right: 0,
                 child: SvgPicture.asset(image),
               ),
-               Positioned(child: Text('skip'.tr())),
+              isVisibility
+                  ? Positioned(
+                    child: Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            LoginView.routeName,
+                          );
+                        },
+                        child: const Text('تخط'),
+                      ),
+                    ),
+                  )
+                  : const SizedBox.shrink(),
             ],
           ),
         ),
@@ -48,10 +68,7 @@ class PageViewItem extends StatelessWidget {
           child: Text(
             subTitle,
             textAlign: TextAlign.center,
-            style: GoogleFonts.cairo(
-              fontSize: 13.sp,
-              fontWeight: FontWeight.w600,
-            ),
+            style: MyTheme.lightTheme.textTheme.titleMedium,
           ),
         ),
       ],
